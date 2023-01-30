@@ -433,7 +433,6 @@ mod tests {
         let filename = "test_data/games_2023_01_28.html";
         let content = std::fs::read_to_string(&filename).expect("cant read file");
         let document = Html::parse_document(&content);
-        println!("{:?}", document.errors.len());
         let games_page: GamesPage = Default::default();
         let task = GamesPage::new_task("https://livescores.com", "/");
         let p = games_page

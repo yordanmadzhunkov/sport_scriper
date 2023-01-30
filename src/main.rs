@@ -93,16 +93,12 @@ async fn main() {
         client: get_client(),
         parsers: HashMap::new(),
     };
-    scraper.add_scriping_function(Box::new(LeagueGroupPage::default()));
     scraper.add_scriping_function(Box::new(MainPage::default()));
+    scraper.add_scriping_function(Box::new(LeagueGroupPage::default()));
     scraper.add_scriping_function(Box::new(GamesPage::default()));
 
     while queue.len() > 0 {
         if let Some(task) = queue.pop() {
-            let filename = format!("{}.html", task.name);
-            println!("Scriping {}{}", task.url, task.href);
-            //if std::path::Path::new(&filename).exists() {
-            println!("Skipping {} because it already exists", &filename);
             let res = scraper.scripe(&task).await;
             match res {
                 Ok(mut result) => {
@@ -116,6 +112,7 @@ async fn main() {
                     }
                 }
                 Err(TaskError::Parsing(document)) => {
+                    let filename = format!("{}.html", task.name);
                     println!("Writting {}", &filename);
                     let content = document.root_element().html();
                     let mut file = std::fs::File::create(&filename).expect("create failed");
@@ -131,9 +128,6 @@ async fn main() {
                     println!("Other Error {}", message)
                 }
             };
-            //} else {
-            //    println!("Skipping {} because {} exists", task.url, &filename);
-            // }
             sleep(std::time::Duration::from_secs(1)).await;
         }
     }
