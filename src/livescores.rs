@@ -65,7 +65,7 @@ impl ScripingFunction for LeagueGroupPage {
 
     fn parse(&self, task: &ScraperTask, document: &Html) -> Result<ScraperTaskResult, TaskError> {
         let mut new_tasks: Vec<ScraperTask> = vec![];
-        let league_selector = Selector::parse(".se li > ul > li > a").unwrap();
+        let league_selector = Selector::parse("ul.Dc > li > ul.Dc > li > a").unwrap();
 
         let mut data = LeagueGroupPage::default();
         for element in document.select(&league_selector) {
@@ -127,7 +127,7 @@ impl ScripingFunction for MainPage {
 
     fn parse(&self, task: &ScraperTask, document: &Html) -> Result<ScraperTaskResult, TaskError> {
         let mut new_tasks: Vec<ScraperTask> = vec![];
-        let league_selector = Selector::parse("a.ue").unwrap();
+        let league_selector = Selector::parse("a.Fc").unwrap();
         for element in document.select(&league_selector) {
             match element.value().attr("href") {
                 Some(href) => {
@@ -165,7 +165,7 @@ impl ScripingFunction for GamesPage {
     }
 
     fn parse(&self, task: &ScraperTask, document: &Html) -> Result<ScraperTaskResult, TaskError> {
-        let selector = Selector::parse("div.xb > div.bb, div.xf").unwrap();
+        let selector = Selector::parse("div.db > div.yf, div.Cf").unwrap();
         let select_date = Selector::parse("span.cb").unwrap();
         let select_game = Selector::parse("a.qd").unwrap();
         let select_stage = Selector::parse("span.fb").unwrap();

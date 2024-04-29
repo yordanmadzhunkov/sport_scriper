@@ -102,6 +102,7 @@ async fn main() {
             let res = scraper.scripe(&task).await;
             match res {
                 Ok(mut result) => {
+                    println!("Url  = {}", result.url);
                     println!("Data = {}", result.data);
                     println!("Last update = {}", result.last_update);
                     println!("Success = {}", result.success);
